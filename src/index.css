@@ -1,0 +1,98 @@
+.app {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+  font-family: Arial, sans-serif;
+  border: 1px solid black;
+}
+
+nav {
+  margin-bottom: 20px;
+  padding: 10px;
+  background-color: #f0f0f0;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+input, textarea, select, button {
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+button {
+  background-color: #4c77af;
+  color: white;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #45a049;
+}
+
+.list-item {
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  border-bottom: 1px solid #eee;
+}
+
+.list-item input[type="checkbox"] {
+  margin-right: 10px;
+}
+
+.list-item .content {
+  flex-grow: 1;
+}
+
+.list-item .content.completed {
+  text-decoration: line-through;
+  color: #999;
+}
+
+.list-item button {
+  background-color: #f44336;
+  margin-left: 10px;
+}
+
+.list-item button:hover {
+  background-color: #d32f2f;
+}
+
+.show-more {
+  margin-top: 20px;
+  text-align: center;
+}
+
+.show-more button {
+  background-color: #2196F3;
+}
+
+.show-more button:hover {
+  background-color: #0b7dda;
+}
+h2 {
+  margin: 0 0 15px 0;
+  color: #333;
+}
+
+label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+
+nav a {
+  text-decoration: none;
+  color: #333;
+  padding: 5px 10px;
+}
+
+nav a:hover {
+  color: #4CAF50;
+}
+
