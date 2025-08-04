@@ -1,60 +1,80 @@
-import{ useState } from 'react';
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
 
 function ListPage() {
   const [items, setItems] = useState(
     JSON.parse(localStorage.getItem('items')) || []
   );
-  
+
   const [showCount, setShowCount] = useState(5);
 
   const handleCheckbox = (id) => {
-    const newItems = items.map(item => {
+    const updatedItems = [];
+    for (let i = 0; i < items.length; i++) {
+      const item = items[i];
       if (item.id === id) {
-        return { ...item, completed: !item.completed };
+        updatedItems.push({
+          ...item,
+          completed: !item.completed
+        });
+      } else {
+        updatedItems.push(item);
       }
-      return item;
-    });
-    setItems(newItems);
-    localStorage.setItem('items', JSON.stringify(newItems));
+    }
+    setItems(updatedItems);
+    localStorage.setItem('items', JSON.stringify(updatedItems));
   };
 
   const handleDelete = (id) => {
-    const newItems = items.filter(item => item.id !== id);
-    setItems(newItems);
-    localStorage.setItem('items', JSON.stringify(newItems));
+    const remainingItems = [];
+    for (let i = 0; i < items.length; i++) {
+      if (items[i].id !== id) {
+        remainingItems.push(items[i]);
+      }
+    }
+    setItems(remainingItems);
+    localStorage.setItem('items', JSON.stringify(remainingItems));
   };
 
   const handleShowMore = () => {
     setShowCount(showCount + 5);
   };
 
+  const renderItems = () => {
+    const elements = [];
+    for (let i = 0; i < items.length && i < showCount; i++) {
+      const item = items[i];
+      elements.push(
+        <div key={item.id} className="list-item">
+          <input
+            type="checkbox"
+            checked={item.completed}
+            onChange={() => handleCheckbox(item.id)}
+          />
+
+          <div className={`content ${item.completed ? 'completed' : ''}`}>
+            <h3>{item.title}</h3>
+            <p>Category: {item.category}</p>
+          </div>
+
+          <button onClick={() => handleDelete(item.id)}>
+            Delete
+          </button>
+        </div>
+      );
+    }
+    return elements;
+  };
+
   return (
     <div>
       <h1>My Items</h1>
       <Link to="/">Add New Item</Link>
-      
+
       <div className="list">
-        {items.slice(0, showCount).map(item => (
-          <div key={item.id} className="list-item">
-            <input
-              type="checkbox"
-              checked={item.completed}
-              onChange={() => handleCheckbox(item.id)}
-            />
-            
-            <div className={`content ${item.completed ? 'completed' : ''}`}>
-              <h3>{item.title}</h3>
-              <p>Category: {item.category}</p>
-            </div>
-            
-            <button onClick={() => handleDelete(item.id)}>
-              Delete
-            </button>
-          </div>
-        ))}
+        {renderItems()}
       </div>
-      
+
       {showCount < items.length && (
         <div className="show-more">
           <button onClick={handleShowMore}>Show More</button>
@@ -65,3 +85,4 @@ function ListPage() {
 }
 
 export default ListPage;
+
